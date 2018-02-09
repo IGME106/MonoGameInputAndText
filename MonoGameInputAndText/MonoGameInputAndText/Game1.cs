@@ -23,11 +23,15 @@ namespace MonoGameInputAndText
         SpriteBatch spriteBatch;
 
         private Texture2D beetleRightFacing;                // Create image (texture) variable
-        private Vector2 position;                           // Create position (vector) variable
-        private SpriteFont spriteFont;
+        private Vector2 characterPosition;                  // Create characterPosition (vector) variable
+        private Vector2 namePosition = new Vector2(0, 0);
+        private Vector2 statsPosition = new Vector2(0, 35);
 
-        private float XPos = 5;                             // Create X and Y position variables
-        private float YPos = 5;
+        private SpriteFont nameFont;
+        private SpriteFont statsFont;
+
+        private float XPos = 0;                             // Create X and Y characterPosition variables
+        private float YPos = 100;
 
         public Game1()
         {
@@ -64,11 +68,12 @@ namespace MonoGameInputAndText
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            // Load texture
+            // Load image/texture
             beetleRightFacing = Content.Load<Texture2D>("BeatleRightFacing");
-            // Load sprite font
-            spriteFont = Content.Load<SpriteFont>("spriteFont");
-
+            // Load sprite font for name
+            nameFont = Content.Load<SpriteFont>("nameFont");
+            // Load sprite font for stats
+            statsFont = Content.Load<SpriteFont>("statsFont");
         }
 
         /// <summary>
@@ -90,10 +95,6 @@ namespace MonoGameInputAndText
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            //XPos++;                                             // Increase X position of texture by 1
-
-            //position = new Vector2(XPos, YPos);                 // Update position variable
-
             ProcessInput();
 
             base.Update(gameTime);
@@ -109,8 +110,25 @@ namespace MonoGameInputAndText
 
             spriteBatch.Begin();                                // Begin draw process
 
-            spriteBatch.Draw(beetleRightFacing, position, Color.White);
-            spriteBatch.DrawString(spriteFont, "test", position, Color.Blue);
+            spriteBatch.Draw(
+                beetleRightFacing,
+                characterPosition,
+                Color.White
+            );
+
+            spriteBatch.DrawString(
+                nameFont,
+                "Benjamin Kleynhans",
+                namePosition,
+                Color.Blue
+            );
+
+            spriteBatch.DrawString(
+                statsFont,
+                "XY-Coordinates: " + characterPosition.X + " , " + characterPosition.Y,
+                statsPosition,
+                Color.Blue
+            );
 
             spriteBatch.End();
 
@@ -123,23 +141,25 @@ namespace MonoGameInputAndText
 
             if (keyboardState.IsKeyDown(Keys.A))                    // Move left
             {
-                position.X = position.X - 5;
+                XPos = XPos - 5;
             }
 
             if (keyboardState.IsKeyDown(Keys.D))                    // Move right
             {
-                position.X = position.X + 5;
+                XPos = XPos + 5;
             }
 
             if (keyboardState.IsKeyDown(Keys.W))                    // Move up
             {
-                position.Y = position.Y - 5;
+                YPos = YPos - 5;
             }
 
             if (keyboardState.IsKeyDown(Keys.S))                    // Move down
             {
-                position.Y = position.Y + 5;
+                YPos = YPos + 5;
             }
+
+            characterPosition = new Vector2(XPos, YPos);            // Update characterPosition variable
         }
     }
 }
