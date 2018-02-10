@@ -26,6 +26,7 @@ namespace MonoGameInputAndText
         private Vector2 characterPosition;                  // Create characterPosition (vector) variable
         private Vector2 namePosition = new Vector2(0, 0);
         private Vector2 statsPosition = new Vector2(0, 35);
+        private Vector2 controlPostion = new Vector2(700, 0);
 
         private SpriteFont nameFont;
         private SpriteFont statsFont;
@@ -106,7 +107,7 @@ namespace MonoGameInputAndText
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.MonoGameOrange);
+            GraphicsDevice.Clear(Color.Aquamarine);
 
             spriteBatch.Begin();                                // Begin draw process
 
@@ -121,6 +122,13 @@ namespace MonoGameInputAndText
                 "Benjamin Kleynhans",
                 namePosition,
                 Color.Blue
+            );
+
+            spriteBatch.DrawString(
+                nameFont,
+                "  W\nA S D",
+                controlPostion,
+                Color.Red
             );
 
             spriteBatch.DrawString(
